@@ -1,0 +1,83 @@
+def Graphs(data, **kwargs):
+    import pandas as pd
+    import numpy as np
+    import os 
+    import matplotlib.pyplot as plt
+    def savplt():
+        if cdf[i].dtype in ['float','int64','int32']:
+# Checking if count of unique values less than 15, then considering that numerical column as categorical
+            if len(cdf[i].value_counts())<15:
+                fig,axes = plt.subplots(1,1,figsize=(14,8))
+                cdf[i].value_counts().plot(kind='barh',color='b')
+                plt.title('Bar-plot of '+i.upper())
+                plt.ylabel(i.upper())
+                plt.xlabel('Values')
+                filename = directory + '\\' + 'Bar-plot of ' + i.upper() + '.png'
+                try:
+                    fig.savefig(filename)
+                except:
+                    os.mkdir(directory)
+                fig.savefig(filename)
+                plt.close(fig)
+            else:
+                fig,axes = plt.subplots(1,2,figsize=(14,8))
+                cdf.hist(ax=axes[0],column=i,color='b')
+                axes[0].set_title('Histogram of '+i.upper())
+                axes[0].set_xlabel(i.upper())
+                axes[0].set_ylabel('Frequency')
+                axes[1].set_title('Box Plot of '+i.upper())
+                axes[1].set_ylabel('Values of '+i.upper())
+                cdf.boxplot(ax=axes[1],column=i)
+                filename = directory + '\\' + 'Histrogram and Box-plot of ' + i.upper() + '.png'
+                try:
+                    fig.savefig(filename)
+                except:
+                    os.mkdir(directory)
+                fig.savefig(filename)
+                plt.close(fig)
+        else:
+# Checking if count of unique values is greater than 25% of total number of rows, then ignoring that column
+# and not saving plot for those columns
+            if len(cdf[i].value_counts())<(cdf.shape[0]/4):
+                fig,axes = plt.subplots(1,1,figsize=(14,8))
+                cdf[i].value_counts().plot(kind='barh',color='b')
+                plt.title('Bar-plot of '+i.upper())
+                plt.ylabel(i.upper())
+                plt.xlabel('Values')
+                filename = directory + '\\' + 'Bar-plot of ' + i.upper() + '.png'
+                try:
+                    fig.savefig(filename)
+                except:
+                    os.mkdir(directory)
+                fig.savefig(filename)
+                plt.close(fig)
+    fmt = input("Enter the format of dataset (excel or csv)")
+    try:
+        if fmt == 'csv' or fmt == 'CSV' or fmt == 'Csv':
+            cdf = pd.read_csv(data+'.csv')
+        elif fmt == 'excel' or fmt == 'Excel' or fmt == 'EXCEL':
+            cdf = pd.read_excel(data+'.xls')
+        else:
+            print("Incorrect Format entered")
+            return None
+    except:
+        print("No such file with mentioned format exist in the directory")
+        return None
+    kargs = kwargs.keys()
+    if 'colindex' in kargs:
+        colindex=kwargs['colindex']
+    else: 
+        colindex=-1
+    if 'directory' in kargs:
+        directory = kwargs['directory']
+    else:
+        directory = os.getcwd()
+    col_name = cdf.columns
+    if colindex==-1:
+        for i in col_name:
+            savplt()
+    else:
+        total_items = len(col_name)
+        for j,i in enumerate(col_name):
+            if j in colindex:
+                savplt() 
