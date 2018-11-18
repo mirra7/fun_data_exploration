@@ -1,0 +1,39 @@
+Hello to all the Data Scientists and all the would be data scientists.
+
+As we already know 70% of the work of a data scientist is to visualise, understand and clean the data before modelling.
+Why not make this task a little easier and less time consuming?
+
+Most of the times when we have many variables/predictors, it becomes difficult to visualise all of them together using 
+a scatterplot/scatter matrix. Even plotting graphs for each predictor in the data is very time consuming.
+ 
+Hence, We have created a function "Graphs" which takes the data, optional arguments "colindex" and "directory" as input.
+
+Tool - Python (Jupyter Notebook)
+
+Arguments to the function:
+
+data - The filename without the extension, however the file should be either .excel or.csv format. 
+       Give the complete path if the data is not in the current working directory.
+
+colindex - List of all the column numbers starting from 0 for which you want the plots to be saved.
+           If not given, the the function will save the plots for all the columns.
+
+directory- The path where you want all te graphs to be saved.
+	   If the directory is not given as input, the plots will be saved in the current working directory.
+	   If the folder does not exist in which you want to save, the function will create a folder by the folder name and save the plots in it.
+
+The function plots bar plots for each categorical predictors and a boxplot and histogram as subplots for each numerical predictors.
+If the "colindex" is not given as input while calling the function "Graphs" then the function will plot the graphs for 
+all the variables/predictors. If the "directory" is not given, then the graphs will be saved in the current working directory.
+
+If a particular column has unique values more than 25% of the number of rows, then plotting a graph doesn't really make 
+sense, hence we ignore that particular column.
+If a categorical variable is actually numbers, then according to python, the variable is numeric and hence it will plot a 
+boxplot and histogram, although the histogram will look like a bar graph for that variable, the boxplot does not give us 
+the information we are looking for. Hence python should be able to understand that the variable is actually categorical 
+and not numeric. If the unique values in a numerical variable is less that 15 (let's say), then treat the variable as 
+categorical and plot the bar plot for the same. 
+
+Happy Data Exploration!
+
+Project Partner : Priyesh Tewari - https://www.linkedin.com/in/priyesht/
